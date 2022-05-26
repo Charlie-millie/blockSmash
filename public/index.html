@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name='viewport' content='width=device-width,initial-scale=1'>
+        <title>Block Smash</title>
+        <script defer src='./build/BlockSmash.js'></script>
+    </head>
+    <body>
+<!--        <h1>Block Smash</h1>-->
+        <div class="blockSmash-root"></div>
+    </body>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            new window.BlockSmash({
+                target: document.querySelector(".blockSmash-root"),
+            });
+        });
+    </script>
+</html>
