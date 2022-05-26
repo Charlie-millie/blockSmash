@@ -13,11 +13,18 @@ export default class BlockSmash extends BaseComponent{
         this.$evnets = new EventEmitter();
         this.$doms = {};
 
+        this.$ctx = null;
+        this.frameId = 0;
+        this.ratio = null;
+
+
         this.init();
     }
 
     setup() {
         this.$state = {
+            stageWidth: config.width,
+            stageHeight: config.height,
             currentState: 'play', // [play, pause]
             score: 0,
             level: 0,
@@ -27,10 +34,12 @@ export default class BlockSmash extends BaseComponent{
     template() {
         const {
             currentState,
+            stageWidth,
+            stageHeight,
         } = this.$state;
         // console.log("template ", currentState);
         return `
-            <canvas class="blockSmash-stage" ></canvas>
+            <canvas class="blockSmash-stage" width="${stageWidth}" height="${stageHeight}"></canvas>
             <div class="blockSmash-info">
                 <button class="blockSmash-play-button" data-action="play">${currentState.toUpperCase()}</button>
             </div>
@@ -66,7 +75,13 @@ export default class BlockSmash extends BaseComponent{
 
         this.loadFonts('DungGeunMo', DungGeunMo);
 
+        this.$doms.stage = this.$target.querySelector(".blockSmash-stage");
+        this.$ctx = this.$doms.stage.getContext("2d");
 
+        this.ratio = config.width / config.height;
+        console.log("[init] ratio ", this.ratio);
+
+        this.resize();
     }
 
     async loadFonts(name, url) {
@@ -75,5 +90,20 @@ export default class BlockSmash extends BaseComponent{
         document.fonts.add(font);
     }
 
+    resize() {
+        console.log("[resize] current size: ", this.$state.stageWidth, this.$state.stageHeight);
+        /*this.stageSize.width = Math.floor(document.body.clientWidth);
+        this.stageSize.height = Math.floor(this.stageSize.width / 3);*/
+        this.setStageSize();
 
+        console.log("[resize] resized size: ", this.$state.stageWidth, this.$state.stageHeight);
+    }
+
+    setStageSize() {
+        const width = Math.floor(document.body.clientWidth);
+        this.setState({
+            stageWidth: width - 2,
+            stageHeight: Math.floor(width / 3)
+        });
+    }
 }
