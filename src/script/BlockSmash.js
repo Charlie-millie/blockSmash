@@ -1,9 +1,14 @@
 import BaseComponent from "./components/BaseComponent";
 import EventEmitter from "./components/EventEmitter";
 import {config} from "./config";
-import "../style/style.scss";
 import DungGeunMo from "../assets/font/DungGeunMo.woff2";
 import {polyfill} from "./utils";
+import {StateStack} from "./components/FSM";
+import {setBlockSmash} from "./Globals";
+import MainMenuState from "./components/sceneState/MainMenuState";
+
+import "../style/style.scss";
+
 
 polyfill();
 export default class BlockSmash extends BaseComponent{
@@ -13,11 +18,12 @@ export default class BlockSmash extends BaseComponent{
         this.$evnets = new EventEmitter();
         this.$doms = {};
 
+        this.gameMode = new StateStack();
         this.$ctx = null;
         this.frameId = 0;
         this.ratio = null;
 
-
+        setBlockSmash(this);
         this.init();
     }
 
@@ -82,6 +88,7 @@ export default class BlockSmash extends BaseComponent{
         console.log("[init] ratio ", this.ratio);
 
         this.resize();
+        this.startGame();
     }
 
     async loadFonts(name, url) {
@@ -92,11 +99,13 @@ export default class BlockSmash extends BaseComponent{
 
     resize() {
         console.log("[resize] current size: ", this.$state.stageWidth, this.$state.stageHeight);
-        /*this.stageSize.width = Math.floor(document.body.clientWidth);
-        this.stageSize.height = Math.floor(this.stageSize.width / 3);*/
         this.setStageSize();
 
         console.log("[resize] resized size: ", this.$state.stageWidth, this.$state.stageHeight);
+    }
+
+    isPaused() {
+        return this.$state.currentState === "pause";
     }
 
     setStageSize() {
@@ -106,4 +115,47 @@ export default class BlockSmash extends BaseComponent{
             stageHeight: Math.floor(width / 3)
         });
     }
+
+    startGame() {
+        this.gameMode.push(new MainMenuState());
+        this.animate();
+    }
+
+    pauseGame() {
+
+    }
+
+    resumeGame() {
+
+    }
+
+    animate = () => {
+        console.log("[animate]");
+        if (this.$state.stageWidth !== document.documentElement.offsetWidth) {
+            this.resize();
+        }
+        if (!this.isPaused()) {
+            this.gameMode.update();
+        }
+
+        this.gameMode.render(this.$ctx);
+        this.frameId = window.requestAnimationFrame(this.animate);
+
+    }
+
+
+    getStageSize() {
+        return {
+            width: this.$state.stageWidth,
+            height: this.$state.stageHeight,
+        };
+    }
+
+    getGameModeInstance() {
+        return this.gameMode;
+    }
+
+
+
 }
+

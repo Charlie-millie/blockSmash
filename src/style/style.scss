@@ -6,17 +6,14 @@ body {
     font-family: DungGeunMo, sans-serif;
 
     .blockSmash-root {
-        //display: flex;
-        //justify-content: center;
         margin-top: 50px;
         .blockSmash-stage {
             border: solid 1px $board-stroke-color;
         }
         .blockSmash-info {
-            width: 70px;
             margin: 0 5px;
             .blockSmash-play-button {
-                width: 100%;
+                width: 100px;
                 height: 30px;
                 background-color: #333;
                 color: #fff;
