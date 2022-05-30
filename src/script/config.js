@@ -4,4 +4,5 @@ export const config = {
     height: 240,
 
     paddleColor: "#333",
+    ballColor: "#ff9900",
 };
