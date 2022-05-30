@@ -6,7 +6,7 @@ export class StateStack {
 
     update() {
         const state = this.states.top();
-        console.log("[StateStack] state: ", state);
+        // console.log("[StateStack] state: ", state);
         if (state) {
             state.update();
         }

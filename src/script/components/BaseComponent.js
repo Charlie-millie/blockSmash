@@ -18,7 +18,6 @@ export default class BaseComponent {
     render () {
         const newNode = this.$target.cloneNode(true);
         newNode.innerHTML = this.template();
-        console.log("[render] ----------------------------------", newNode);
         const oldChildNodes = [ ...this.$target.childNodes ];
         const newChildNodes = [ ...newNode.childNodes ];
         const max = Math.max(oldChildNodes.length, newChildNodes.length);

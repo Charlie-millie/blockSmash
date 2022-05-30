@@ -28,6 +28,6 @@
         "rollup-plugin-livereload": "^2.0.5",
         "rollup-plugin-sass": "^1.2.4",
         "rollup-plugin-terser": "^7.0.2",
-        "sirv-cli": "^1.0.14"
+        "sirv-cli": "^2.0.2"
     }
 }

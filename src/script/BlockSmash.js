@@ -46,10 +46,7 @@ export default class BlockSmash extends BaseComponent{
         // console.log("template ", currentState);
         return `
             <canvas class="blockSmash-stage" width="${stageWidth}" height="${stageHeight}"></canvas>
-            <div class="blockSmash-info">
-                <button class="blockSmash-play-button" data-action="play">${currentState.toUpperCase()}</button>
-            </div>
-          
+            <div class="blockSmash-info"></div>
         `;
     }
 
@@ -76,8 +73,8 @@ export default class BlockSmash extends BaseComponent{
     }
 
     init() {
-        this.setEventDelegation();
-        this.setEvent();
+        // this.setEventDelegation();
+        // this.setEvent();
 
         this.loadFonts('DungGeunMo', DungGeunMo);
 
@@ -98,10 +95,10 @@ export default class BlockSmash extends BaseComponent{
     }
 
     resize() {
-        console.log("[resize] current size: ", this.$state.stageWidth, this.$state.stageHeight);
+        // console.log("[resize] current size: ", this.$state.stageWidth, this.$state.stageHeight);
         this.setStageSize();
 
-        console.log("[resize] resized size: ", this.$state.stageWidth, this.$state.stageHeight);
+        // console.log("[resize] resized size: ", this.$state.stageWidth, this.$state.stageHeight);
     }
 
     isPaused() {
@@ -130,7 +127,7 @@ export default class BlockSmash extends BaseComponent{
     }
 
     animate = () => {
-        console.log("[animate]");
+        // console.log("[animate]");
         if (this.$state.stageWidth !== document.documentElement.offsetWidth) {
             this.resize();
         }
@@ -143,7 +140,7 @@ export default class BlockSmash extends BaseComponent{
 
     }
 
-
+    // global api method
     getStageSize() {
         return {
             width: this.$state.stageWidth,
@@ -155,7 +152,9 @@ export default class BlockSmash extends BaseComponent{
         return this.gameMode;
     }
 
-
+    getStage() {
+        return this.$doms.stage;
+    }
 
 }
 
