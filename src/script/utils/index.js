@@ -1,3 +1,4 @@
+import {$BlockSmashInstance} from "../Globals";
 
 export function polyfill() {
     window.requestAnimationFrame || (window.requestAnimationFrame = (callBack) => {
@@ -41,6 +42,24 @@ export function timeFormat(time, minutesLength = 1){
     } else {
         return "0:00";
     }
+}
+
+
+// sizing functions
+export function normalizeBox(x, y, width, height) {
+    console.info(`Original X: ${x}, Y: ${y}, Width: ${width}, Height: ${height}`);
+    let {width: stageWidth, height: stageHeight} = $BlockSmashInstance.getStageSize();
+    let normalizedX = x / stageWidth;
+    let normalizedY = y / stageHeight;
+    let normalizedWidth = width / stageWidth;
+    let normalizedHeight = height / stageHeight;
+    console.info(`Normalized: X: ${normalizedX}, Y: ${normalizedY}, Width: ${normalizedWidth}, Height: ${normalizedHeight}`);
+    return {
+        x: normalizedX,
+        y: normalizedY,
+        width: normalizedWidth,
+        height: normalizedHeight
+    };
 }
 
 

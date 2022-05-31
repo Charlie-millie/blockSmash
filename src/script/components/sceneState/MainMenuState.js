@@ -1,6 +1,7 @@
 import {State} from "../FSM";
 import {$BlockSmashInstance} from "../../Globals";
 import {Button, centerText} from "../UI";
+import {Level1State} from "./Level1State";
 
 export default class MainMenuState extends State {
     constructor() {
@@ -52,7 +53,7 @@ export default class MainMenuState extends State {
 
         startButton.setHandler(() => {
             this.onExit();
-            // $BlockSmashInstance.getGameModeInstance().push()
+            $BlockSmashInstance.getGameModeInstance().push(new Level1State())
         });
         // startButton.handler.bind(this);
         this.buttons.push(startButton);
