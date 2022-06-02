@@ -1,4 +1,5 @@
 import {config} from "../../config";
+import {$BlockSmashInstance} from "../../Globals";
 
 export default class Paddle {
     constructor(paddleX, paddleWidth, paddleHeight) {
@@ -6,8 +7,10 @@ export default class Paddle {
         this._paddleWidth = paddleWidth;
         this._paddleHeight = paddleHeight;
 
-        this._rightPressed = false;
-        this._leftPressed = false;
+        this.moveFactor = 7;
+
+        this.rightPressed = false;
+        this.leftPressed = false;
     }
 
     get paddleX() {
@@ -48,12 +51,40 @@ export default class Paddle {
         ctx.closePath();
         ctx.restore();
 
+        if(this.rightPressed) {
+            this._paddleX += this.moveFactor;
+            if (this._paddleX + this._paddleWidth > ctx.canvas.width){
+                this._paddleX = ctx.canvas.width - this._paddleWidth;
+            }
+        }
+        else if(this.leftPressed) {
+            this._paddleX -= this.moveFactor;
+            if (this._paddleX < 0){
+                this._paddleX = 0;
+            }
+        }
+
 
     }
 
     handleEvent(event) {
         console.log("[paddle] event: ", event);
 
+    }
+
+    moveLeft() {
+        this._paddleX -= this.moveFactor;
+        if (this._paddleX < 0) {
+            this._paddleX = 0;
+        }
+    }
+
+    moveRight() {
+        this._paddleX += this.moveFactor;
+        const stageSize = $BlockSmashInstance.getStageSize();
+        if (this._paddleX + this._paddleWidth > stageSize.width) {
+            this._paddleX = stageSize.width - this._paddleWidth;
+        }
     }
 
 

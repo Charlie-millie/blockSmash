@@ -17,7 +17,7 @@ export default class GameState extends State {
         const paddleWidth = this.stage.width / this.paddleScaleX;
         const paddleHeight = this.stage.height / this.paddleScaleY;
 
-        this.paddle = new Paddle((this.stage.width - paddleWidth) / 2, paddleHeight, paddleWidth);
+        this.paddle = new Paddle((this.stage.width - paddleWidth) / 2, paddleWidth, paddleHeight);
 
         const x = this.stage.width / 2;
         const y = this.stage.height - this.ballScale;
@@ -54,5 +54,40 @@ export default class GameState extends State {
         this.ball.draw(ctx);
         this.blocks.draw(ctx);
     }
+
+    pauseHandler(event) {
+        if (event.type === "keypress" && event.key === "p") {
+            // pause game
+        }
+    }
+
+    onEnter() {
+        window.addEventListener("keydown", this.paddle);
+        window.addEventListener("keyup", this.paddle);
+        window.addEventListener("pointermove", this.paddle);
+
+        window.addEventListener("keypress", this.pauseHandler);
+    }
+
+    onExit() {
+        window.removeEventListener("keydown", this.paddle);
+        window.removeEventListener("keyup", this.paddle);
+        window.removeEventListener("pointermove", this.paddle);
+
+        window.removeEventListener("keypress", this.pauseHandler);
+    }
+
+    onPause() {
+
+    }
+
+    onWin() {
+
+    }
+
+    onResume() {
+
+    }
+
 
 }
