@@ -68,8 +68,18 @@ export default class Paddle {
     }
 
     handleEvent(event) {
-        console.log("[paddle] event: ", event);
+        // console.log("[paddle] event: ", event);
+        switch (event.type) {
+            case "keydown":
 
+                break;
+            case "keyup":
+
+                break;
+            case "pointermove":
+
+                break;
+        }
     }
 
     moveLeft() {
@@ -85,6 +95,42 @@ export default class Paddle {
         if (this._paddleX + this._paddleWidth > stageSize.width) {
             this._paddleX = stageSize.width - this._paddleWidth;
         }
+    }
+
+    onKeyDown(event) {
+        if (event.key === 'ArrowLeft' || event.key === 'Left' || event.key === 'a' ) {
+            this._leftPressed = true;
+            // event.preventDefault();
+        } else if (event.key === 'ArrowRight' || event.key === 'Right' || event.key === 'd') {
+            this._rightPressed = true;
+            // event.preventDefault();
+        }
+    }
+
+    onKeyUp(event) {
+        if (event.key === 'ArrowLeft' || event.key === 'Left' || event.key === 'a' ) {
+            this._leftPressed = false;
+            // event.preventDefault();
+        } else if (event.key === 'ArrowRight' || event.key === 'Right' || event.key === 'd') {
+            this._rightPressed = false;
+            // event.preventDefault();
+        }
+    }
+
+    onPointerMove(event) {
+        const stage = $BlockSmashInstance.getStage();
+        let relativeX = event.clientX - stage.offsetLeft;
+        if (relativeX > 0 && relativeX < stage.width) {
+            this._paddleX = relativeX - this._paddleWidth / 2;
+            if (this._paddleX < 0) {
+                this._paddleX = 0;
+            }
+            const stageSize = $BlockSmashInstance.getStageSize();
+            if (this._paddleX + this._paddleWidth > stageSize.width) {
+                this._paddleX = stageSize.width - this._paddleWidth;
+            }
+        }
+
     }
 
 
