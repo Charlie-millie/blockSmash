@@ -71,13 +71,13 @@ export default class Paddle {
         // console.log("[paddle] event: ", event);
         switch (event.type) {
             case "keydown":
-
+                this.onKeyDown(event);
                 break;
             case "keyup":
-
+                this.onKeyUp(event);
                 break;
             case "pointermove":
-
+                this.onPointerMove(event);
                 break;
         }
     }
